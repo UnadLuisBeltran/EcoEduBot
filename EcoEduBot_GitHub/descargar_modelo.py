@@ -33,6 +33,9 @@ def descargar_modelo():
         local_dir=str(MODEL_DIR),
     )
 
+    if not Path(ruta).is_file():
+        raise FileNotFoundError(f"ONNX model not found: {ruta}")
+
     print("Model downloaded successfully.")
 
     return Path(ruta)
