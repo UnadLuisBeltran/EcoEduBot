@@ -1,6 +1,10 @@
 import streamlit as st
 
 from groq_backend import generar_respuesta_groq
+from descargar_modelo import descargar_modelo
+
+# Download the ONNX model before initializing the RAG system.
+descargar_modelo()
 from rag_backend import RecuperadorIPCC, construir_contexto
 
 
