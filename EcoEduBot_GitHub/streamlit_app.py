@@ -1,3 +1,4 @@
+
 import streamlit as st
 
 from groq_backend import (
@@ -8,6 +9,7 @@ from descargar_modelo import descargar_modelo
 
 # Download the ONNX model before initializing the RAG system.
 descargar_modelo()
+
 from rag_backend import RecuperadorIPCC, construir_contexto
 
 
@@ -40,16 +42,20 @@ except Exception as error:
     st.exception(error)
     st.stop()
 
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
 
 for mensaje in st.session_state.messages:
     with st.chat_message(mensaje["role"]):
         st.markdown(mensaje["content"])
 
+
 pregunta = st.chat_input(
     "Ask an environmental question in English..."
 )
+
 
 if pregunta:
     historial = st.session_state.messages.copy()
@@ -62,7 +68,7 @@ if pregunta:
     with st.chat_message("user"):
         st.markdown(pregunta)
 
-   with st.chat_message("assistant"):
+    with st.chat_message("assistant"):
         with st.spinner("Searching IPCC evidence..."):
             try:
                 # Resolve conversational references before retrieval.
@@ -71,7 +77,7 @@ if pregunta:
                     historial
                 )
 
-                # Retrieve IPCC evidence.
+                # Retrieve evidence using the contextualized query.
                 fragmentos = recuperador.recuperar(
                     consulta_rag,
                     candidatos=20,
@@ -110,6 +116,10 @@ if pregunta:
 
             except Exception as error:
                 st.error(
+                    "An error occurred while generating the answer."
+                )
+                st.exception(error)
+
                     "An error occurred while generating the answer."
                 )
                 st.exception(error)
