@@ -62,21 +62,21 @@ if pregunta:
     with st.chat_message("user"):
         st.markdown(pregunta)
 
-    with st.chat_message("assistant"):
+   with st.chat_message("assistant"):
         with st.spinner("Searching IPCC evidence..."):
             try:
                 # Resolve conversational references before retrieval.
-consulta_rag = contextualizar_pregunta(
-    pregunta,
-    historial
-)
+                consulta_rag = contextualizar_pregunta(
+                    pregunta,
+                    historial
+                )
 
-# Retrieve evidence using the contextualized query.
-fragmentos = recuperador.recuperar(
-    consulta_rag,
-    candidatos=20,
-    top_k=3
-)
+                # Retrieve IPCC evidence.
+                fragmentos = recuperador.recuperar(
+                    consulta_rag,
+                    candidatos=20,
+                    top_k=3
+                )
 
                 contexto = construir_contexto(fragmentos)
 
