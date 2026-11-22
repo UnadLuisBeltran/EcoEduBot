@@ -14,7 +14,9 @@ def generar_respuesta_groq(pregunta, contexto, historial=None):
                 "You are EcoEduBot, an environmental education assistant. "
                 "Answer in English using the retrieved IPCC evidence. "
                 "Do not invent facts or references. "
-                "If the evidence is insufficient, acknowledge the limitation."
+                "If the evidence is insufficient, acknowledge the limitation. "
+                "Do not include a reference list or retrieved PDF page numbers "
+                "in your answer. The application displays source pages separately."
             )
         }
     ]
