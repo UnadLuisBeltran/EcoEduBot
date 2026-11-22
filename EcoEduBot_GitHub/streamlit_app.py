@@ -1,6 +1,9 @@
 import streamlit as st
 
-from groq_backend import generar_respuesta_groq
+from groq_backend import (
+    generar_respuesta_groq,
+    contextualizar_pregunta
+)
 from descargar_modelo import descargar_modelo
 
 # Download the ONNX model before initializing the RAG system.
@@ -62,11 +65,18 @@ if pregunta:
     with st.chat_message("assistant"):
         with st.spinner("Searching IPCC evidence..."):
             try:
-                fragmentos = recuperador.recuperar(
-                    pregunta,
-                    candidatos=20,
-                    top_k=3
-                )
+                # Resolve conversational references before retrieval.
+consulta_rag = contextualizar_pregunta(
+    pregunta,
+    historial
+)
+
+# Retrieve evidence using the contextualized query.
+fragmentos = recuperador.recuperar(
+    consulta_rag,
+    candidatos=20,
+    top_k=3
+)
 
                 contexto = construir_contexto(fragmentos)
 
