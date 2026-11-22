@@ -119,7 +119,3 @@ if pregunta:
                     "An error occurred while generating the answer."
                 )
                 st.exception(error)
-
-                    "An error occurred while generating the answer."
-                )
-                st.exception(error)
